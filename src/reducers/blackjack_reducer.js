@@ -1,4 +1,4 @@
-export default (state={}, action) => {
+const blackjack_reducer = (state={}, action) => {
   switch (action.type) {
     case 'FETCH_DECK':
       return {
@@ -59,8 +59,33 @@ export default (state={}, action) => {
           {name:"King of Hearts", value: 10}
         ]
       }
-
+    case 'SET_AI_CARDS':
+      return {
+        userCards: state.userCards,
+        aiCards: [...state.aiCards, ...action.payload.aiCards],
+        deck: action.payload.deck
+      }
+    case 'SET_USER_CARDS':
+      return {
+        aiCards: state.aiCards,
+        userCards: [...state.userCards, ...action.payload.userCards],
+        deck: action.payload.deck
+      }
+    case 'HIT_AI':
+      return {
+        aiCards: [...state.aiCards, action.payload.aiCard],
+        userCards: state.userCards,
+        deck: action.payload.deck
+      }
+    case 'HIT_USER':
+      return {
+        userCards: [...state.userCards, action.payload.userCard],
+        aiCards: state.aiCards,
+        deck: action.payload.deck
+      }
     default:
       return state
   }
 }
+
+export default blackjack_reducer
